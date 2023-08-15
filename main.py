@@ -9,10 +9,9 @@ from sqlalchemy.orm import Session
 
 from db import get_db
 from models import Contact
-from schemas import OwnerModel, OwnerResponse, CatModel, CatResponse, CatVaccinatedModel
+from schemas import ContactSchema
 
 app = FastAPI()
-
 
 
 @app.get("/")

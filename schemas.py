@@ -4,7 +4,7 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
 
 
-class ContactModel(BaseModel):
+class ContactSchema(BaseModel):
     name: str = Field('Albert', min_length=3, max_length=100)
     sur_name: str = Field('Einstein', min_length=3, max_length=100)
     email: EmailStr
