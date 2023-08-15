@@ -71,6 +71,7 @@ def get_contact_by_email(email: EmailStr, db: Session = Depends(get_db)):
         )
     return contact
 
+
 @app.get("/api/contacts/sur_name/{sur_name}", response_model=ContactSchema, tags=["contacts"])
 def get_contact_by_email(sur_name: str = Path(min_length=3, max_length=100), db: Session = Depends(get_db)):
     contact = db.query(Contact).filter_by(sur_name=sur_name).first()
