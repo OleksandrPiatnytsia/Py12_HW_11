@@ -40,8 +40,8 @@ def get_contacts(session: Session = Depends(get_db)):
 
 
 @app.get("/api/contacts/{contact_id}", response_model=ContactSchema, tags=["contacts"])
-def get_contact_by_id(contact_id: int = Path(ge=1), db: Session = Depends(get_db)):
-    contact = db.query(Contact).filter_by(id=contact_id).first()
+def get_contact_by_id(contact_id: int = Path(ge=1), session: Session = Depends(get_db)):
+    contact = session.query(Contact).filter_by(id=contact_id).first()
     if contact is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -51,8 +51,8 @@ def get_contact_by_id(contact_id: int = Path(ge=1), db: Session = Depends(get_db
 
 
 @app.get("/api/contacts/name/{name}", response_model=ContactSchema, tags=["contacts"])
-def get_contact_by_name(name: str = Path(min_length=3, max_length=100), db: Session = Depends(get_db)):
-    contact = db.query(Contact).filter_by(name=name).first()
+def get_contact_by_name(name: str = Path(min_length=3, max_length=100), session: Session = Depends(get_db)):
+    contact = session.query(Contact).filter_by(name=name).first()
     if contact is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -62,8 +62,8 @@ def get_contact_by_name(name: str = Path(min_length=3, max_length=100), db: Sess
 
 
 @app.get("/api/contacts/email/{email}", response_model=ContactSchema, tags=["contacts"])
-def get_contact_by_email(email: EmailStr, db: Session = Depends(get_db)):
-    contact = db.query(Contact).filter_by(email=email).first()
+def get_contact_by_email(email: EmailStr, session: Session = Depends(get_db)):
+    contact = session.query(Contact).filter_by(email=email).first()
     if contact is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -73,8 +73,8 @@ def get_contact_by_email(email: EmailStr, db: Session = Depends(get_db)):
 
 
 @app.get("/api/contacts/sur_name/{sur_name}", response_model=ContactSchema, tags=["contacts"])
-def get_contact_by_email(sur_name: str = Path(min_length=3, max_length=100), db: Session = Depends(get_db)):
-    contact = db.query(Contact).filter_by(sur_name=sur_name).first()
+def get_contact_by_email(sur_name: str = Path(min_length=3, max_length=100), session: Session = Depends(get_db)):
+    contact = session.query(Contact).filter_by(sur_name=sur_name).first()
     if contact is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -139,3 +139,9 @@ def update_contact(body: ContactSchema, contact_id: int = Path(ge=1), session: S
     session.add(contact)
     session.commit()
     return contact
+
+
+@app.get("/api/contacts/week_birthdays", response_model=List[ContactSchema], tags=["contacts"])
+def get_contact_by_email(session: Session = Depends(get_db)):
+    contacts = session.query(Contact).all()
+    return contacts
