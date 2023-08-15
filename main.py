@@ -1,16 +1,33 @@
-# This is a sample Python script.
+import os
+import pathlib
+import time
+from typing import List
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from fastapi import FastAPI, Depends, HTTPException, status, Path, Query, Request, File, UploadFile
+from sqlalchemy import text
+from sqlalchemy.orm import Session
+
+from db import get_db
+from models import Contact
+from schemas import OwnerModel, OwnerResponse, CatModel, CatResponse, CatVaccinatedModel
+
+app = FastAPI()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+@app.get("/")
+def read_root():
+    return {"message": "Application started"}
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+@app.get("/api/healthchecker")
+def healthchecker(db: Session = Depends(get_db)):
+    try:
+        # Make request
+        result = db.execute(text("SELECT 1")).fetchone()
+        if result is None:
+            raise HTTPException(status_code=500, detail="Database is not configured correctly")
+        return {"message": "Welcome to FastAPI!"}
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=500, detail="Error connecting to the database")

@@ -9,6 +9,7 @@ packages = [{include = "hw_11"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 sqlalchemy = "^2.0.19"
+fastapi = {extras = ["all"], version = "^0.101.1"}
 
 
 [build-system]
