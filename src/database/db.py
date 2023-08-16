@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # URI:  postgresql://username:password@domain:port/database
-file_config = pathlib.Path(__file__).parent.parent.parent.joinpath('config.ini')
+file_config = pathlib.Path(__file__).parent.parent.joinpath('config/config.ini')
 config = configparser.ConfigParser()
 config.read(file_config)
 
