@@ -6,9 +6,9 @@ from pydantic import EmailStr
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-from db import get_db
-from models import Contact
-from schemas import ContactSchema
+from src.database.db import get_db
+from src.database.models import Contact
+from src.schemas import ContactSchema
 
 app = FastAPI()
 
