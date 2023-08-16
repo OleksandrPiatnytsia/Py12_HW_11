@@ -22,6 +22,7 @@ engine = create_engine(URI, echo=False, pool_size=5, max_overflow=0)
 DBSession = sessionmaker(bind=engine)
 
 
+# session_debug = DBSession()
 
 
 # Dependency
