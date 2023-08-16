@@ -8,7 +8,9 @@ from src.routes import contacts
 
 app = FastAPI()
 
-app.include_router(contacts.router, prefix='/api')
+app.include_router(contacts.router)
+app.include_router(contacts.birthday_router)
+
 
 @app.get("/")
 def read_root():
@@ -26,4 +28,3 @@ def healthchecker(session: Session = Depends(get_db)):
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Error connecting to the database")
-
